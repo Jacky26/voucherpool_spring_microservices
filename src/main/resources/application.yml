@@ -1,0 +1,30 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: API-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: USER-SERVICE
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/user/**
+        - id: VOUCHER-SERVICE
+          uri: lb://VOUCHER-SERVICE
+          predicates:
+            - Path=/voucher/**
+        - id: OFFER-SERVICE
+          uri: lb://OFFER-SERVICE
+          predicates:
+            - Path=/offer/**
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
